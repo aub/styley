@@ -1,0 +1,3 @@
+class PointStyle < Style
+end
+

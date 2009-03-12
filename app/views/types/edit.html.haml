@@ -1,0 +1,3 @@
+- form_for (@type, :url => type_path(@type), :method => :put) do |f|
+  = render(:partial => 'form', :locals => { :f => f, :type => @type })
+  = submit_tag 'Save'

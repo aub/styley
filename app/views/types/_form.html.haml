@@ -1,0 +1,12 @@
+%p
+  = f.check_box :enabled
+  = f.label :enabled
+  #styles
+    - f.fields_for :styles do |style_form|
+      .style_block
+        %h2= "Style #{style_form.object.id}"
+        = render :partial => "styles/#{style_form.object.class.name.underscore}_form", :locals => { :f => style_form, :type => type }
+        = style_form.check_box '_delete'
+        = style_form.label '_delete', 'Remove'
+  %p
+    = link_to 'Add a Style', '#', :id => 'add_style'

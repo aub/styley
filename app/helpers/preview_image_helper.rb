@@ -1,0 +1,2 @@
+module PreviewImageHelper
+end

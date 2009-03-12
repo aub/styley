@@ -1,0 +1,3 @@
+class LineStyle < Style
+end
+

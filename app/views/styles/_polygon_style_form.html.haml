@@ -1,0 +1,41 @@
+%p
+  = f.label :bottom_zoom
+  = f.select :bottom_zoom, [['All', nil]] + (1..20).map { |i| [i, i] }
+  = f.label :top_zoom
+  = f.select :top_zoom, [['All', nil]] + (1..20).map { |i| [i, i] }
+
+%p
+  = f.label :color
+  = f.text_field :color
+
+%p
+  = f.check_box :show_inline
+  = f.label :show_inline
+
+%p
+  = f.label :inline_color
+  = f.text_field :inline_color
+
+%p
+  = f.label :inline_width
+  = f.text_field :inline_width
+
+%p
+  = f.label :inline_join
+  = f.text_field :inline_join
+
+%p
+  = f.check_box :show_outline
+  = f.label :show_outline
+
+%p
+  = f.label :outline_color
+  = f.text_field :outline_color
+
+%p
+  = f.label :outline_width
+  = f.text_field :outline_width
+
+%p
+  = f.label :outline_join
+  = f.text_field :outline_join
