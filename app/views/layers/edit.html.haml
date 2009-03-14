@@ -4,12 +4,20 @@
   - @layer.types.each do |type|
     %li
       = type.title
-      = link_to('Edit', edit_type_path(type), :style => 'text-decoration: underline;')
+      = link_to('Edit', edit_layer_type_path(@layer, type), :style => 'text-decoration: underline;')
       - if type.children
         %ul
           - type.children.each do |child|
             %li
               = child.title
-              = link_to('Edit', edit_type_path(child))
+              = link_to('Edit', edit_layer_type_path(@layer, child))
 
-= link_to 'Back', layers_path
+= link_to 'Add Type', new_layer_type_path(@layer)
+
+%h4 Settings
+
+- form_for(@layer, :url => layer_path(@layer), :method => 'put') do |f|
+  = render :partial => 'form', :locals => { :f => f }
+  = f.submit('Update')
+  = link_to 'Cancel', layers_path
+

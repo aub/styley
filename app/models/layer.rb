@@ -6,6 +6,12 @@ class Layer < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_inclusion_of :geometry_type, :in => %w(polygon point line)
 
+  before_validation :remove_gunk_from_query
+
+  def source_name
+    data_source ? data_source.name : nil
+  end
+
   def source_name=(name)
     self.data_source = DataSource.find_by_name(name)
   end
@@ -28,5 +34,11 @@ class Layer < ActiveRecord::Base
 
   def parameters
     query.blank? ? data_source.parameters : data_source.parameters.merge(:table => query)
+  end
+
+  protected
+
+  def remove_gunk_from_query
+    self.query = query.gsub("\n", ' ').gsub("\r", ' ').gsub(/\s+/, ' ')
   end
 end

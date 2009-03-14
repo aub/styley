@@ -15,3 +15,12 @@
   = f.text_field :label_wrap_width, :size => 4
   = f.label :label_placement, 'Placement:'
   = f.select :label_placement, %w(point line).map { |t| [t,t] }
+
+%p
+  - f.fields_for :label_shield_image do |label_shield_image_form|
+    = label_shield_image_form.label :image, 'Shield Image:'
+    = label_shield_image_form.file_field :image
+  - f.fields_for :label_point_image do |label_point_image_form|
+    = label_point_image_form.label :image, 'Point Image:'
+    = label_point_image_form.file_field :image
+

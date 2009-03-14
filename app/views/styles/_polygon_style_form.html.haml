@@ -7,6 +7,9 @@
 %p
   = f.label :color, 'Color:'
   = f.text_field :color, :size => 10, :class => 'colorwell'
+  - f.fields_for :polygon_pattern_image do |polygon_pattern_image_form|
+    = polygon_pattern_image_form.label :image, 'Fill Pattern:'
+    = polygon_pattern_image_form.file_field :image
 
 %p
   = f.check_box :show_inline

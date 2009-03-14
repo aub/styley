@@ -9,6 +9,8 @@
   = f.text_field :color, :size => 10, :class => 'colorwell'
   = f.label :line_join, 'Join:'
   = join_selector(f, :line_join)
+  = f.label :width, 'Line Width:'
+  = f.text_field :width, :size => 4
 
 %p
   = f.check_box :show_inline
@@ -33,6 +35,8 @@
   = f.text_field :outline_width, :size => 10
   = f.label :outline_join, 'Outline Join:'
   = join_selector(f, :outline_join) 
+
+= render :partial => 'styles/label_style_form', :locals => { :f => f }
 
 #color_picker
 

@@ -1,0 +1,17 @@
+%p
+  = f.label :title, 'Title:'
+  = f.text_field :title
+%p
+  = f.label :name, 'Name:'
+  = f.text_field :name
+%p
+  = f.label :source_name, 'Data Source:'
+  = f.select :source_name, DataSource.all.map { |ds| [ds.name, ds.name] }
+%p
+  = f.label :geometry_type, 'Geometry Type:'
+  = f.select :geometry_type, %w(line point polygon).map { |type| [type, type] }
+%p
+  %table
+    %tr
+      %td= f.label :query, 'Query:'
+      %td= f.text_area :query

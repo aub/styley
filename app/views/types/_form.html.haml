@@ -1,8 +1,16 @@
 %p
   = f.check_box :enabled
   = f.label :enabled
+
+%p
+  = f.label :title, 'Title:'
+  = f.text_field :title, :size => 10
+  = f.label :name, 'Name:'
+  = f.text_field :name, :size => 10
+
+%p
   #styles
     - f.fields_for :styles do |style_form|
       = render :partial => 'styles/style_form', :locals => { :f => style_form, :style => style_form.object, :type => type }
   %p
-    = link_to('Add a Style', '#', :id => 'add_style', :rel => "/types/#{type.to_param}/styles/new")
+    = link_to('Add a Style', '#', :id => 'add_style', :rel => "/layers/#{(type.layer || type.parent.layer).to_param}/types/#{type.to_param}/styles/new")

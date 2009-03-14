@@ -1,4 +1,7 @@
 class TypesController < ApplicationController
+
+  before_filter :find_layer
+
   def edit
     @type = Type.find(params[:id])
   end
@@ -14,5 +17,24 @@ class TypesController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+
+  def new
+    @type = Type.new
+  end
+
+  def create
+    @type = Type.create(params[:type].merge(:layer => @layer))
+    if @type.valid?
+      redirect_to layers_path
+    else
+      render :action => 'new'
+    end
+  end
+
+  protected
+
+  def find_layer
+    @layer = Layer.find(params[:layer_id])
   end
 end

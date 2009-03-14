@@ -1,5 +1,5 @@
 %h2= @type.title
-- form_for (@type, :url => type_path(@type), :method => :put) do |f|
+- form_for (@type, :url => layer_type_path((@type.layer || @type.parent.layer), @type), :method => :put, :html => { :multipart => true }) do |f|
   = render(:partial => 'form', :locals => { :f => f, :type => @type })
   = f.submit 'Save'
   = link_to 'Cancel', edit_layer_path(@type.layer || @type.parent.layer)

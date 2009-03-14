@@ -1,0 +1,5 @@
+= error_messages_for :type
+
+- form_for(@type, :url => layer_types_path(@layer), :method => :put) do |f|
+  = render :partial => 'form', :locals => { :f => f }
+  = f.submit 'Create'

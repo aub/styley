@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090313215332) do
+ActiveRecord::Schema.define(:version => 20090314153314) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "type"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(:version => 20090313215332) do
     t.string   "extent"
     t.string   "srs"
     t.boolean  "estimate_extent"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "images", :force => true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -91,6 +100,11 @@ ActiveRecord::Schema.define(:version => 20090313215332) do
     t.string   "shield_fill_color"
     t.string   "shield_file"
     t.integer  "position",                   :default => 1
+    t.integer  "polygon_pattern_image_id"
+    t.integer  "point_image_id"
+    t.integer  "line_pattern_image_id"
+    t.integer  "label_shield_image_id"
+    t.integer  "label_point_image_id"
   end
 
   create_table "types", :force => true do |t|

@@ -1,14 +1,4 @@
 jQuery(function($) {
-  $('#add_style').bind('click', function(e) {
-    $.ajax({
-      type: 'GET',
-      url: e.target['rel'],
-      success: function(result) {
-        $(result).appendTo('#styles');
-      }
-    });
-    return false;
-  });
 
   $('#create_sample_button').bind('click', function(e) {
     $('#sample_image').empty();
@@ -36,23 +26,34 @@ jQuery(function($) {
       }
     });
   });
-  var f = $.farbtastic('#color_picker');
-  var p = $('#color_picker');
+ 
+  var farbtastic = $.farbtastic('#color_picker');
   $('.farbtastic').hide();
-  var selected;
+  prepareColorwells(farbtastic);
+
+  $('#add_style').bind('click', function(e) {
+    $.ajax({
+      type: 'GET',
+      url: e.target['rel'],
+      success: function(result) {
+        $(result).appendTo('#styles');
+        prepareColorwells(farbtastic);
+      }
+    });
+    return false;
+  });
+});
+
+function prepareColorwells(farbtastic) {
   $('.colorwell')
-    .each(function () { f.linkTo(this); })
+    .each(function () { farbtastic.linkTo(this); })
     .focus(function() {
       $('.farbtastic').show();
-      // if (selected) {
-      //  $(selected).css('opacity', 0.75).removeClass('colorwell-selected');
-      // }
-      f.linkTo(this);
-      // p.css('opacity', 1);
+      farbtastic.linkTo(this);
       $('.farbtastic').css('top', $(this).position().top + $(this).height() + 15);
       $('.farbtastic').css('left', $(this).position().left);
-      $(selected = this).css('opacity', 1).addClass('colorwell-selected');
+      $(this).addClass('colorwell-selected');
     }).blur(function() {
       $('.farbtastic').hide();
     });
-});
+};

@@ -22,7 +22,7 @@ class MmlBuilder
           copies = []
           copies << 'outline' if layer.outline_required
           copies << 'inline' if layer.inline_required
-          copies << ''
+          copies << 'fill'
           copies.each do |subclass|
             layer_to_xml(layer, map_tag, subclass)
           end
