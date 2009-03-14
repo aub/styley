@@ -1,10 +1,13 @@
 class Style < ActiveRecord::Base
   belongs_to :attachment, :class_name => 'Type'
 
+  before_validation :tweak_attributes
+
   def to_mss(class_name)
     result = ''
-    result << ".#{class_name}.outline#{zoom_string} { #{outline_styles_string} }\n" if show_outline
-    result << ".#{class_name}.inline#{zoom_string} { #{inline_styles_string} }\n" if show_inline
+    result << style_string([class_name, 'outline'], outline_rules) if show_outline
+    result << style_string([class_name, 'inline'], inline_rules) if show_inline
+    result << style_string([class_name, 'labels'], label_rules, 'name') if show_labels
     result
   end
 
@@ -17,23 +20,40 @@ class Style < ActiveRecord::Base
     result
   end
 
-  def line_styles_string
-    
+  def inline_rules
+    {
+      'line-width' => inline_width,
+      'line-color' => inline_color,
+      'line-join' => inline_join
+    }
   end
 
-  def inline_styles_string
-    result = ''
-    result << "line-width: #{inline_width}; " unless inline_width.blank?
-    result << "line-color: #{inline_color}; " unless inline_color.blank?
-    result << "line-join: #{inline_join}; " unless inline_join.blank?
-    result
+  def outline_rules
+    { 
+      'line-width' => outline_width,
+      'line-color' => outline_color,
+      'line-join' => outline_join
+    }
   end
 
-  def outline_styles_string
-    result = ''
-    result << "line-width: #{outline_width}; " unless outline_width.blank?
-    result << "line-color: #{outline_color}; " unless outline_color.blank?
-    result << "line-join: #{outline_join}; " unless outline_join.blank?
-    result
+  def label_rules
+    {
+      'text-face-name' => label_font,
+      'text-fill' => label_fill_color,
+      'text-halo-radius' => label_halo_radius,
+      'text-size' => label_size,
+      'text-wrap-width' => label_wrap_width,
+      'text-placement' => label_placement
+    }
+  end
+
+  def style_string(class_names, rules, label_field=nil)
+    ".#{Array(class_names).join('.')}#{zoom_string}#{attachment.filter_string} #{label_field} {\n #{rules.map { |name, value| value.blank? ? nil: "  #{name}: #{value.to_s};" }.compact.join("\n")}\n}\n\n" 
+  end
+
+  protected
+
+  def tweak_attributes
+    self.label_font = "\"#{label_font}\"" unless label_font =~ /^".*"$/
   end
 end

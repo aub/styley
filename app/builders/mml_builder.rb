@@ -2,14 +2,12 @@ class MmlBuilder
 
   def self.build
     map = Map.first
+    layers = Layer.find(:all, :order => 'position DESC')
 
-    style_string = "Map { map-bgcolor: #{map.background_color} }\n"
-    Layer.all.each do |layer|
+    style_string = "Map { map-bgcolor: #{map.background_color}; }\n"
+    layers.each do |layer|
       layer.types.each do |type|
-        type.styles.each do |style|
-          style_string << style.to_mss(layer.name)
-          style_string << "\n"
-        end
+        style_string << type_to_mss(type, layer.name)
       end
     end
 
@@ -19,8 +17,8 @@ class MmlBuilder
     xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
     xml.Map(:srs => map.srs) do |map_tag|
       map_tag.Stylesheet { |s| s.text!(style_string) }
-      Layer.all.each do |layer|
-        if layer.all_types.find { |t| t.enabled }
+      layers.each do |layer|
+        if layer.all_types.find { |t| (t.enabled? && (t.parent.nil? || t.parent.enabled?)) }
           copies = []
           copies << 'outline' if layer.outline_required
           copies << 'inline' if layer.inline_required
@@ -30,8 +28,10 @@ class MmlBuilder
           end
         end
       end
-      Layer.all.select { |l| l.labels_required }.each do |layer|
-        layer_to_xml(layer, map_tag, 'labels')
+      layers.select { |l| l.labels_required }.each do |layer|
+        if layer.all_types.find { |t| (t.enabled? && (t.parent.nil? || t.parent.enabled?)) }
+          layer_to_xml(layer, map_tag, 'labels')
+        end
       end
     end
   end    
@@ -48,5 +48,16 @@ class MmlBuilder
         end
       end
     end
+  end
+
+  def self.type_to_mss(type, class_name)
+    result = ''
+    return result unless type.enabled?
+    type.styles.each do |style|
+      result << style.to_mss(class_name)
+      result << "\n"
+    end
+    type.children.each { |child| result << type_to_mss(child, class_name) }
+    result
   end
 end

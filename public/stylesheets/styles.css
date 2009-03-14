@@ -6,3 +6,47 @@ body {
   margin-left: 40px;
 }
 
+#color_picker {
+  background-color: white;
+  border: 1px solid black;
+  float: right;
+}
+
+#sample_controls {
+  margin: 10px 0 20px 0;
+}
+
+.sortable_list { 
+  list-style-type: none; 
+  margin: 0; 
+  margin-bottom: 15px;
+  padding: 0; 
+  width: 60%; 
+}
+
+.sortable_list li { 
+  margin: 0 3px 3px 3px; 
+  padding: 0.4em; 
+  padding-left: 1.5em; 
+  font-size: 0.9em; 
+  height: 15px; 
+}
+
+.sortable_list li a {
+  text-decoration: underline;
+}
+
+.sortable_list li span { 
+  position: absolute; margin-left: -1.3em; 
+}
+
+#sample_image_block {
+  width: 512px;
+}
+
+#sample_spinner {
+  text-align: center;
+  margin-top: 240px;
+  display: none;
+}
+

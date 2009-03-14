@@ -1,0 +1,17 @@
+%p
+  = f.check_box :show_labels
+  = f.label :show_labels, 'Show Labels'
+
+%p
+  = f.label :label_font, 'Font:'
+  = f.text_field :label_font, :size => 10
+  = f.label :label_size, 'Font Size:'
+  = f.select :label_size, (5..30).map { |i| [i,i] }
+  = f.label :label_fill_color, 'Fill Color:'
+  = f.text_field :label_fill_color, :size => 10, :class => 'colorwell'
+  = f.label :label_halo_radius, 'Halo Radius:'
+  = f.text_field :label_halo_radius, :size => 4 
+  = f.label :label_wrap_width, 'Wrap Width:'
+  = f.text_field :label_wrap_width, :size => 4
+  = f.label :label_placement, 'Placement:'
+  = f.select :label_placement, %w(point line).map { |t| [t,t] }

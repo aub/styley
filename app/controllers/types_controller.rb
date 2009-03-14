@@ -1,8 +1,4 @@
 class TypesController < ApplicationController
-  def index
-    @types = Type.find(:all, :conditions => ['parent_id IS NULL'])
-  end
-
   def edit
     @type = Type.find(params[:id])
   end
@@ -10,7 +6,11 @@ class TypesController < ApplicationController
   def update
     @type = Type.find(params[:id])
     if @type.update_attributes(params[:type])
-      redirect_to types_path
+      # this is unfortunate, but necessary because rails' nested forms don't work with STI
+      @type.styles.reload
+      @type.styles.each { |style| style.update_attribute(:type, @type.style_type.name) }
+
+      redirect_to edit_layer_path(@type.layer || @type.parent.layer)
     else
       render :action => 'edit'
     end

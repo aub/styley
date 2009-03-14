@@ -15,7 +15,7 @@ line_water:
       filters: waterway=stream
 
 municipal_buildings:
-  title: Buildings
+  title: Municipal Buildings
   layer_name: citylike_nonparking_area
   children:
     schools:

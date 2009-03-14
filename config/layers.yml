@@ -1,8 +1,10 @@
 coast:
+  title: Base Layer
   source_name: coastline
   geometry_type: polygon
 
 citylike_nonparking_area:
+  title: Municipal Buildings
   source_name: osm
   geometry_type: polygon
   query: (SELECT *
@@ -14,6 +16,7 @@ citylike_nonparking_area:
          ORDER BY z_order ASC, way_area DESC) AS citylike
 
 parklike_area:
+  title: Parks and Recreation
   source_name: osm
   geometry_type: polygon
   query: (SELECT *,
@@ -26,6 +29,7 @@ parklike_area:
          ORDER BY z_order ASC, way_area DESC) AS parklike
 
 citylike_parking_area:
+  title: Parking Areas
   source_name: osm
   geometry_type: polygon
   query: (SELECT *
@@ -35,6 +39,7 @@ citylike_parking_area:
          ORDER BY z_order ASC, way_area DESC) AS citylike
 
 water_area:
+  title: Inland Water
   source_name: osm
   geometry_type: polygon
   query: (SELECT *
@@ -45,11 +50,13 @@ water_area:
          ORDER BY z_order ASC) AS water
 
 water_line:
+  title: Minor Inland Water
   source_name: osm
   geometry_type: line 
   query: (SELECT * FROM osm_line WHERE waterway IN ('river', 'stream', 'canal') ORDER BY z_order ASC) AS rivers
 
 building_area:
+  title: Buildings
   source_name: osm
   geometry_type: polygon
   query: (SELECT * FROM osm_polygon WHERE building IS NOT NULL ORDER BY z_order ASC, way_area DESC) AS citylike

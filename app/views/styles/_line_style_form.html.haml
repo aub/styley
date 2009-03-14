@@ -1,0 +1,38 @@
+%p
+  = f.label :bottom_zoom, 'Min Zoom: '
+  = f.select :bottom_zoom, [['All', nil]] + (1..20).map { |i| [i, i] }
+  = f.label :top_zoom, 'Max Zoom: '
+  = f.select :top_zoom, [['All', nil]] + (1..20).map { |i| [i, i] }
+
+%p
+  = f.label :color, 'Color:'
+  = f.text_field :color, :size => 10, :class => 'colorwell'
+  = f.label :line_join, 'Join:'
+  = join_selector(f, :line_join)
+
+%p
+  = f.check_box :show_inline
+  = f.label :show_inline
+
+%p
+  = f.label :inline_color, 'Inline Color:'
+  = f.text_field :inline_color, :size => 10, :class => 'colorwell'
+  = f.label :inline_width, 'Inline Width:'
+  = f.text_field :inline_width, :size => 10
+  = f.label :inline_join, 'Inline Join:'
+  = join_selector(f, :inline_join) 
+
+%p
+  = f.check_box :show_outline
+  = f.label :show_outline
+
+%p
+  = f.label :outline_color, 'Outline Color:'
+  = f.text_field :outline_color, :size => 10, :class => 'colorwell'
+  = f.label :outline_width, 'Outline Width:'
+  = f.text_field :outline_width, :size => 10
+  = f.label :outline_join, 'Outline Join:'
+  = join_selector(f, :outline_join) 
+
+#color_picker
+

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090310221550) do
+ActiveRecord::Schema.define(:version => 20090313215332) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "type"
@@ -34,6 +34,9 @@ ActiveRecord::Schema.define(:version => 20090310221550) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "query"
+    t.integer  "position",       :default => 1
+    t.string   "title"
+    t.string   "label_fields"
   end
 
   create_table "maps", :force => true do |t|
@@ -87,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20090310221550) do
     t.integer  "shield_size"
     t.string   "shield_fill_color"
     t.string   "shield_file"
+    t.integer  "position",                   :default => 1
   end
 
   create_table "types", :force => true do |t|

@@ -1,3 +1,5 @@
+%h2= @type.title
 - form_for (@type, :url => type_path(@type), :method => :put) do |f|
   = render(:partial => 'form', :locals => { :f => f, :type => @type })
-  = submit_tag 'Save'
+  = f.submit 'Save'
+  = link_to 'Cancel', edit_layer_path(@type.layer || @type.parent.layer)

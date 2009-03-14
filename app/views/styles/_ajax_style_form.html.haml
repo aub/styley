@@ -1,0 +1,5 @@
+.style_block
+  %h2 New Style
+  - fields_for "type[styles_attributes][new_#{rand * 1000}]", @style do |style_form|
+    = render :partial => "styles/#{@style.class.name.underscore}_form", :locals => { :f => style_form, :type => @type }
+

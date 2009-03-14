@@ -1,0 +1,5 @@
+.style_block
+  %h2= "Style #{style.id}"
+  = render :partial => "styles/#{style.class.name.underscore}_form", :locals => { :f => f, :type => type }
+  = f.check_box '_delete'
+  = f.label '_delete', 'Remove'

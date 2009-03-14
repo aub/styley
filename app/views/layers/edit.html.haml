@@ -1,0 +1,15 @@
+%h2= @layer.title
+%h4 Types
+%ul
+  - @layer.types.each do |type|
+    %li
+      = type.title
+      = link_to('Edit', edit_type_path(type), :style => 'text-decoration: underline;')
+      - if type.children
+        %ul
+          - type.children.each do |child|
+            %li
+              = child.title
+              = link_to('Edit', edit_type_path(child))
+
+= link_to 'Back', layers_path
