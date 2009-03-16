@@ -1,4 +1,5 @@
 log/*
-public/images/rendered_maps/**/*
-**/*.swp
-tmp/**/*
+public/images/rendered_maps/*
+public/system/*
+*.swp
+tmp/*
