@@ -2,12 +2,12 @@ class MmlBuilder
 
   def self.build
     map = Map.first
-    layers = Layer.find(:all, :order => 'position DESC')
+    layers = Layer.find(:all, :order => 'position DESC', :conditions => ['enabled = ?', true])
 
     style_string = "Map { map-bgcolor: #{map.background_color}; }\n"
     layers.each do |layer|
       layer.types.each do |type|
-        style_string << type_to_mss(type, layer.name)
+        style_string << type_to_mss(type, layer.class_name)
       end
     end
 
@@ -18,7 +18,7 @@ class MmlBuilder
     xml.Map(:srs => map.srs) do |map_tag|
       map_tag.Stylesheet { |s| s.text!(style_string) }
       layers.each do |layer|
-        if layer.all_types.find { |t| (t.enabled? && (t.parent.nil? || t.parent.enabled?)) }
+        unless (layer.types.select { |t| t.enabled? }).empty?
           copies = []
           copies << 'outline' if layer.outline_required
           copies << 'inline' if layer.inline_required
@@ -29,7 +29,7 @@ class MmlBuilder
         end
       end
       layers.select { |l| l.labels_required }.each do |layer|
-        if layer.all_types.find { |t| (t.enabled? && (t.parent.nil? || t.parent.enabled?)) }
+        unless (layer.types.select { |t| t.enabled? }).empty?
           layer_to_xml(layer, map_tag, 'labels')
         end
       end
@@ -39,7 +39,7 @@ class MmlBuilder
   protected
 
   def self.layer_to_xml(layer, builder, subclass='')
-    builder.Layer(:class => "#{layer.name} #{subclass}".strip, :srs => layer.data_source.srs) do |layer_tag|
+    builder.Layer(:class => "#{layer.class_name} #{subclass}".strip, :srs => layer.data_source.srs) do |layer_tag|
       layer_tag.Datasource do |data_source_tag|
         layer.parameters.each do |key, value|
           data_source_tag.Parameter(:name => key) do |p| 
@@ -57,7 +57,6 @@ class MmlBuilder
       result << style.to_mss(class_name)
       result << "\n"
     end
-    type.children.each { |child| result << type_to_mss(child, class_name) }
     result
   end
 end

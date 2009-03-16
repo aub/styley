@@ -1,0 +1,17 @@
+- toggle_id = (rand * 1000).ceil
+
+%p
+  = f.label :bottom_zoom, 'Min Zoom: '
+  = f.select :bottom_zoom, [['All', nil]] + (1..20).map { |i| [i, i] }
+  = f.label :top_zoom, 'Max Zoom: '
+  = f.select :top_zoom, [['All', nil]] + (1..20).map { |i| [i, i] }
+
+%p
+  = render(:partial => 'styles/image_selector', :locals => { :f => f, :field => :point_image, :label => 'Icon:' })
+
+%p
+  = f.check_box :allow_overlap
+  = f.label :allow_overlap, 'Allow Overlap'
+
+= render :partial => 'styles/label_style_form', :locals => { :f => f }
+

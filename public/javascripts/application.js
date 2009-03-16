@@ -11,6 +11,8 @@ jQuery(function($) {
     });
   });
 
+  installStyleSectionToggles();
+
   $('.sortable_list').sortable({ items: '.sortable_item' });
   $('.sortable_list').disableSelection();
 
@@ -26,10 +28,6 @@ jQuery(function($) {
       }
     });
   });
- 
-  var farbtastic = $.farbtastic('#color_picker');
-  $('.farbtastic').hide();
-  prepareColorwells(farbtastic);
 
   $('#add_style').bind('click', function(e) {
     $.ajax({
@@ -37,10 +35,30 @@ jQuery(function($) {
       url: e.target['rel'],
       success: function(result) {
         $(result).appendTo('#styles');
+        installStyleSectionToggles($(result));
         prepareColorwells(farbtastic);
       }
     });
     return false;
+  });
+
+  if ($('#color_picker').size() > 0) {
+    var farbtastic = $.farbtastic('#color_picker');
+    $('.farbtastic').hide();
+    prepareColorwells(farbtastic);
+  }
+
+  $('.layer_toggle').change(function() {
+    $.ajax({
+      type: 'PUT',
+      url: 'layers/' + $(this).attr('rel'),
+      data: {
+        'layer[enabled]': ($(this).is(':checked') ? '1' : '0'),
+        authenticity_token: window._token
+      },
+      success: function(data) {
+      }
+    });
   });
 });
 
@@ -56,4 +74,12 @@ function prepareColorwells(farbtastic) {
     }).blur(function() {
       $('.farbtastic').hide();
     });
+};
+
+function installStyleSectionToggles(item) {
+  objects = $('.style_section_toggle');
+  objects.unbind('change');
+  objects.change(function() {
+    $($(this).attr('rel')).slideToggle('fast');
+  });
 };

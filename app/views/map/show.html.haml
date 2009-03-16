@@ -1,0 +1,18 @@
+%p
+  = link_to 'Edit Layers', layers_path
+
+#sample_controls
+  %label{ :for => 'zoom_level' } Zoom Level: 
+  = select_tag(:zoom_level, options_for_select((1..20).map { |i| [i, i] }, 10))
+
+  %label{ :for => 'center_lat' } Center Lat:
+  = text_field_tag(:center_lat, '48.874')
+
+  %label{ :for => 'center_lon' } Center Lon:
+  = text_field_tag(:center_lon, '2.2928')
+
+  = submit_tag('Preview', :id => 'create_sample_button');
+
+#sample_image_block
+  #sample_image
+  #sample_spinner= image_tag('spinner.gif')

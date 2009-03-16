@@ -1,3 +1,4 @@
+- toggle_id = (rand * 1000).ceil
 %p
   = f.label :bottom_zoom, 'Min Zoom: '
   = f.select :bottom_zoom, [['All', nil]] + (1..20).map { |i| [i, i] }
@@ -7,35 +8,35 @@
 %p
   = f.label :color, 'Color:'
   = f.text_field :color, :size => 10, :class => 'colorwell'
-  - f.fields_for :polygon_pattern_image do |polygon_pattern_image_form|
-    = polygon_pattern_image_form.label :image, 'Fill Pattern:'
-    = polygon_pattern_image_form.file_field :image
+  = render(:partial => 'styles/image_selector', :locals => { :f => f, :field => :polygon_pattern_image, :label => 'Fill Pattern:' })
 
 %p
-  = f.check_box :show_inline
+  = f.check_box :show_inline, :class => 'style_section_toggle', :rel => "#inline_style_controls_#{toggle_id}"
   = f.label :show_inline
 
-%p
+%p{ :id => "inline_style_controls_#{toggle_id}", :style => f.object.show_inline? ? 'display: block;' : 'display: none;' }
   = f.label :inline_color, 'Inline Color:'
   = f.text_field :inline_color, :size => 10, :class => 'colorwell'
   = f.label :inline_width, 'Inline Width:'
   = f.text_field :inline_width, :size => 10
   = f.label :inline_join, 'Inline Join:'
   = join_selector(f, :inline_join) 
+  = f.label :inline_cap, 'Inline Cap:'
+  = cap_selector(f, :inline_cap)
 
 %p
-  = f.check_box :show_outline
+  = f.check_box :show_outline, :class => 'style_section_toggle', :rel => "#outline_style_controls_#{toggle_id}"
   = f.label :show_outline
 
-%p
+%p{ :id => "outline_style_controls_#{toggle_id}", :style => f.object.show_outline? ? 'display: block;' : 'display: none;' }
   = f.label :outline_color, 'Outline Color:'
   = f.text_field :outline_color, :size => 10, :class => 'colorwell'
   = f.label :outline_width, 'Outline Width:'
   = f.text_field :outline_width, :size => 10
   = f.label :outline_join, 'Outline Join:'
   = join_selector(f, :outline_join)
+  = f.label :outline_cap, 'Outline Cap:'
+  = cap_selector(f, :outline_cap)
 
 = render :partial => 'styles/label_style_form', :locals => { :f => f }
-
-#color_picker
 

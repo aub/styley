@@ -29,6 +29,12 @@ class LayersController < ApplicationController
     end
   end
   
+  def destroy
+    @layer = Layer.find(params[:id])
+    @layer.destroy
+    redirect_to layers_path
+  end
+
   def sort
     params[:ids].split(',').each_with_index do |id, index|
       Layer.find(id).update_attributes(:position => index)

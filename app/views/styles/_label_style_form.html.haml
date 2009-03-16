@@ -1,26 +1,38 @@
+- toggle_id = (rand * 1000).ceil
 %p
-  = f.check_box :show_labels
+  = f.check_box :show_labels, :class => 'style_section_toggle', :rel => "#label_controls_#{toggle_id}"
   = f.label :show_labels, 'Show Labels'
 
-%p
-  = f.label :label_font, 'Font:'
-  = f.text_field :label_font, :size => 10
-  = f.label :label_size, 'Font Size:'
-  = f.select :label_size, (5..30).map { |i| [i,i] }
-  = f.label :label_fill_color, 'Fill Color:'
-  = f.text_field :label_fill_color, :size => 10, :class => 'colorwell'
-  = f.label :label_halo_radius, 'Halo Radius:'
-  = f.text_field :label_halo_radius, :size => 4 
-  = f.label :label_wrap_width, 'Wrap Width:'
-  = f.text_field :label_wrap_width, :size => 4
-  = f.label :label_placement, 'Placement:'
-  = f.select :label_placement, %w(point line).map { |t| [t,t] }
+%div{ :id => "label_controls_#{toggle_id}", :style => f.object.show_labels? ? 'display: block;' : 'display: none;' }
+  %p
+    = f.label :label_font, 'Font:'
+    = font_selector(f, :label_font)
+    = f.label :label_size, 'Font Size:'
+    = f.select :label_size, [['unset', '']] + (5..30).map { |i| [i,i] }
+    = f.label :label_fill_color, 'Fill Color:'
+    = f.text_field :label_fill_color, :size => 10, :class => 'colorwell'
+    = f.label :label_halo_radius, 'Halo Radius:'
+    = f.text_field :label_halo_radius, :size => 4 
+    = f.label :label_halo_fill, 'Halo Fill:'
+    = f.text_field :label_halo_fill, :size => 10, :class => 'colorwell'
 
-%p
-  - f.fields_for :label_shield_image do |label_shield_image_form|
-    = label_shield_image_form.label :image, 'Shield Image:'
-    = label_shield_image_form.file_field :image
-  - f.fields_for :label_point_image do |label_point_image_form|
-    = label_point_image_form.label :image, 'Point Image:'
-    = label_point_image_form.file_field :image
+  %p
+    = f.label :label_wrap_width, 'Wrap Width:'
+    = f.text_field :label_wrap_width, :size => 4
+    = f.label :label_placement, 'Placement:'
+    = f.select :label_placement, %w(point line).map { |t| [t,t] }
+    = f.label :label_dx, 'X Offset'
+    = f.text_field :label_dx, :size => 4
+    = f.label :label_dy, 'Y Offset'
+    = f.text_field :label_dy, :size => 4
+    = f.label :label_max_char_angle_delta, 'Max Bend:'
+    = f.text_field :label_max_char_angle_delta, :size => 3
+    = f.label :label_min_distance, 'Min Distance:'
+    = f.text_field :label_min_distance, :size => 4
+    = f.label :label_spacing, 'Spacing:'
+    = f.text_field :label_spacing, :size => 4
+
+  %p
+    = render(:partial => 'styles/image_selector', :locals => { :f => f, :field => :label_shield_image, :label => 'Shield Image:' })
+    = render(:partial => 'styles/image_selector', :locals => { :f => f, :field => :label_point_image, :label => 'Point Image:' }) 
 

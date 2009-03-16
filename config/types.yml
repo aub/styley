@@ -9,41 +9,14 @@ area_water:
 line_water:
   title: Line Water
   layer_name: water_line
-  children:
-    streams:
-      title: Streams
-      filters: waterway=stream
 
 municipal_buildings:
   title: Municipal Buildings
   layer_name: citylike_nonparking_area
-  children:
-    schools:
-      title: Schools
-      filters: amenity=school
-    colleges:
-      title: Colleges
-      filters: amenity=college
-    universities:
-      title: Universities
-      filters: amenity=university
 
 parks:
   title: Parks
   layer_name: parklike_area
-  children:
-    park:
-      title: Parks
-      filters: leisure!=pitch,leisure!=track,landuse!=cemetery
-    large_park:
-      title: Large Parks
-      filters: leisure!=pitch,leisure!=track,landuse!=cemetery,size=large
-    cemetery:
-      title: Cemeteries
-      filters: landuse=cemetery
-    large_cemetery:
-      title: Large Cemeteries
-      filters: landuse=cemetery,size=large
 
 buildings:
   title: Buildings

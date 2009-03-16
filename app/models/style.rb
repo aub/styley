@@ -13,6 +13,10 @@ class Style < ActiveRecord::Base
 
   before_validation :tweak_attributes
 
+  def self.image_types
+    %w(polygon_pattern_image point_image line_pattern_image label_shield_image label_point_image)
+  end
+
   def to_mss(class_name)
     result = ''
     result << style_string([class_name, 'outline'], outline_rules) if show_outline
@@ -34,7 +38,9 @@ class Style < ActiveRecord::Base
     {
       'line-width' => inline_width,
       'line-color' => inline_color,
-      'line-join' => inline_join
+      'line-join' => inline_join,
+      'line-cap' => inline_cap,
+      'line-dasharray' => inline_dasharray
     }
   end
 
@@ -42,7 +48,9 @@ class Style < ActiveRecord::Base
     { 
       'line-width' => outline_width,
       'line-color' => outline_color,
-      'line-join' => outline_join
+      'line-join' => outline_join,
+      'line-cap' => outline_cap,
+      'line-dasharray' => outline_dasharray
     }
   end
 
@@ -54,12 +62,22 @@ class Style < ActiveRecord::Base
       'text-size' => label_size,
       'text-wrap-width' => label_wrap_width,
       'text-placement' => label_placement,
-      'point-file' => image_path(label_point_image)
+      'point-file' => image_path(label_point_image),
+      'text-dy' => label_dy,
+      'text-dx' => label_dx,
+      'text-halo-fill' => label_halo_fill,
+      'text-max-char-angle-delta' => label_max_char_angle_delta,
+      'text-min-distance' => label_min_distance,
+      'text-spacing' => label_spacing
     }
   end
 
   def style_string(class_names, rules, label_field=nil)
-    ".#{Array(class_names).join('.')}#{zoom_string}#{attachment.filter_string} #{label_field} {\n #{rules.map { |name, value| value.blank? ? nil: "  #{name}: #{value.to_s};" }.compact.join("\n")}\n}\n\n" 
+    return '' unless rules.any? { |name, value| !value.blank? }
+    selectors = attachment.filter_strings.map do |filter_string|
+      ".#{Array(class_names).join('.')}#{zoom_string}#{filter_string}#{label_field.blank? ? '' : ' ' + label_field}"
+    end.join(', ')
+    "#{selectors} {\n #{rules.map { |name, value| value.blank? ? nil: "  #{name}: #{value.to_s};" }.compact.join("\n")}\n}\n\n" 
   end
 
   protected
@@ -70,7 +88,7 @@ class Style < ActiveRecord::Base
   end
 
   def tweak_attributes
-    self.label_font = "\"#{label_font}\"" unless label_font =~ /^".*"$/
+    self.label_font = "\"#{label_font}\"" unless (label_font.blank? || label_font =~ /^".*"$/)
     %w(polygon_pattern_image point_image line_pattern_image label_shield_image label_point_image).each do |image|
       update_attribute(image, Image.create) if send(image).nil?
     end

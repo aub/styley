@@ -13,7 +13,7 @@ class TypesController < ApplicationController
       @type.styles.reload
       @type.styles.each { |style| style.update_attribute(:type, @type.style_type.name) }
 
-      redirect_to edit_layer_path(@type.layer || @type.parent.layer)
+      redirect_to edit_layer_path(@type.layer)
     else
       render :action => 'edit'
     end
@@ -26,10 +26,16 @@ class TypesController < ApplicationController
   def create
     @type = Type.create(params[:type].merge(:layer => @layer))
     if @type.valid?
-      redirect_to layers_path
+      redirect_to edit_layer_path(@layer)
     else
       render :action => 'new'
     end
+  end
+
+  def destroy
+    @type = Type.find(params[:id])
+    @type.destroy
+    redirect_to edit_layer_path(@layer)
   end
 
   protected

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090314153314) do
+ActiveRecord::Schema.define(:version => 20090315215509) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "type"
@@ -38,14 +38,15 @@ ActiveRecord::Schema.define(:version => 20090314153314) do
 
   create_table "layers", :force => true do |t|
     t.integer  "data_source_id"
-    t.string   "name"
+    t.string   "class_name"
+    t.string   "title"
     t.string   "geometry_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "query"
     t.integer  "position",       :default => 1
-    t.string   "title"
     t.string   "label_fields"
+    t.boolean  "enabled",        :default => true
   end
 
   create_table "maps", :force => true do |t|
@@ -105,12 +106,12 @@ ActiveRecord::Schema.define(:version => 20090314153314) do
     t.integer  "line_pattern_image_id"
     t.integer  "label_shield_image_id"
     t.integer  "label_point_image_id"
+    t.integer  "inline_cap"
+    t.string   "outline_dasharray"
   end
 
   create_table "types", :force => true do |t|
     t.integer  "layer_id"
-    t.integer  "parent_id"
-    t.string   "name"
     t.string   "filters"
     t.string   "title"
     t.boolean  "enabled",    :default => true

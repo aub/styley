@@ -1,0 +1,7 @@
+- form_for(@map, :url => map_path, :method => 'put') do |f|
+  = f.label :background_color
+  = f.text_field :background_color, :size => 10, :class => 'colorwell' 
+  %p
+    = f.submit 'Update'
+
+#color_picker

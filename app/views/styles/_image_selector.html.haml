@@ -1,0 +1,11 @@
+-# Requirements:
+-# f - the form
+-# field - the field that holds the image
+-# label - what to put in the label
+- f.fields_for field do |image_form|
+  = image_form.label :image, label
+  = image_tag(image_form.object.image.url) 
+  = image_form.file_field :image
+  - if image_form.object.image && image_form.object.image.path
+    - type = f.object.attachment
+    = link_to('Reset', reset_layer_type_style_image_path(type.layer, type, f.object, image_form.object), :method => :put)

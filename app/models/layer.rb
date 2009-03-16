@@ -2,8 +2,8 @@ class Layer < ActiveRecord::Base
   belongs_to :data_source
   has_many :types
 
-  validates_presence_of :name, :data_source, :geometry_type
-  validates_uniqueness_of :name
+  validates_presence_of :class_name, :data_source, :geometry_type
+  validates_uniqueness_of :class_name
   validates_inclusion_of :geometry_type, :in => %w(polygon point line)
 
   before_validation :remove_gunk_from_query
@@ -16,20 +16,16 @@ class Layer < ActiveRecord::Base
     self.data_source = DataSource.find_by_name(name)
   end
 
-  def all_types
-    types.map { |type| type.self_and_children }.flatten
-  end
-
   def inline_required
-    !all_types.map { |type| type.styles }.flatten.find { |style| style.show_inline }.nil?
+    !types.map { |type| type.styles }.flatten.find { |style| style.show_inline }.nil?
   end
 
   def outline_required
-    !all_types.map { |type| type.styles }.flatten.find { |style| style.show_outline }.nil?
+    !types.map { |type| type.styles }.flatten.find { |style| style.show_outline }.nil?
   end
 
   def labels_required
-    !all_types.map { |type| type.styles }.flatten.find { |style| style.show_labels }.nil?
+    !types.map { |type| type.styles }.flatten.find { |style| style.show_labels }.nil?
   end
 
   def parameters
@@ -39,6 +35,6 @@ class Layer < ActiveRecord::Base
   protected
 
   def remove_gunk_from_query
-    self.query = query.gsub("\n", ' ').gsub("\r", ' ').gsub(/\s+/, ' ')
+    self.query = query.gsub("\n", ' ').gsub("\r", ' ').gsub(/\s+/, ' ') unless query.nil?
   end
 end

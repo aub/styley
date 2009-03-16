@@ -4,22 +4,12 @@
       %span.ui-icon.ui-icon-arowthick-2-n-s
       = layer.title
       = link_to('Edit', edit_layer_path(layer), :style => 'text-decoration: underline;')
+      = link_to('Delete', layer_path(layer), :method => :delete, :style => 'text-decoration: underline;')
+      - if layer.enabled?
+        %input.layer_toggle{ :type => 'checkbox', :rel => layer.id, :checked => 'checked' }
+      - else
+        %input.layer_toggle{ :type => 'checkbox', :rel => layer.id }
 
 %p
   = link_to 'Add Layer', new_layer_path
-
-#sample_controls
-  %label{ :for => 'zoom_level' } Zoom Level: 
-  = select_tag(:zoom_level, options_for_select((1..20).map { |i| [i, i] }))
-
-  %label{ :for => 'center_lat' } Center Lat:
-  = text_field_tag(:center_lat, '48.874')
-
-  %label{ :for => 'center_lon' } Center Lon:
-  = text_field_tag(:center_lon, '2.2928')
-
-  = submit_tag('Create Sample', :id => 'create_sample_button');
-
-#sample_image_block
-  #sample_image
-  #sample_spinner= image_tag('spinner.gif')
+  = link_to 'Preview Map', map_path

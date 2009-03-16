@@ -1,3 +1,5 @@
+- toggle_id = (rand * 1000).ceil
+
 %p
   = f.label :bottom_zoom, 'Min Zoom: '
   = f.select :bottom_zoom, [['All', nil]] + (1..20).map { |i| [i, i] }
@@ -7,36 +9,53 @@
 %p
   = f.label :color, 'Color:'
   = f.text_field :color, :size => 10, :class => 'colorwell'
+  = render(:partial => 'styles/image_selector', :locals => { :f => f, :field => :line_pattern_image, :label => 'Line Pattern:' })
+
+%p
   = f.label :line_join, 'Join:'
   = join_selector(f, :line_join)
+  = f.label :line_cap, 'Cap:'
+  = cap_selector(f, :line_cap)
   = f.label :width, 'Line Width:'
   = f.text_field :width, :size => 4
+  = f.label :line_dasharray, 'Dasharray:'
+  = f.text_field :line_dasharray, :size => 6
 
 %p
-  = f.check_box :show_inline
+  = f.check_box :show_inline, :class => 'style_section_toggle', :rel => "#inline_controls_#{toggle_id}"
   = f.label :show_inline
 
-%p
-  = f.label :inline_color, 'Inline Color:'
-  = f.text_field :inline_color, :size => 10, :class => 'colorwell'
-  = f.label :inline_width, 'Inline Width:'
-  = f.text_field :inline_width, :size => 10
-  = f.label :inline_join, 'Inline Join:'
-  = join_selector(f, :inline_join) 
+%span{ :id => "inline_controls_#{toggle_id}", :style => f.object.show_inline? ? 'display: block;' : 'display: none;' }
+  %p
+    = f.label :inline_color, 'Inline Color:'
+    = f.text_field :inline_color, :size => 10, :class => 'colorwell'
+    = f.label :inline_width, 'Inline Width:'
+    = f.text_field :inline_width, :size => 10
+    = f.label :inline_join, 'Inline Join:'
+    = join_selector(f, :inline_join) 
+    = f.label :outline_cap, 'Inline Cap:'
+    = cap_selector(f, :outline_cap)
+  %p
+    = f.label :inline_dasharray, 'Inline Dasharray:'
+    = f.text_field :inline_dasharray, :size => 6
 
 %p
-  = f.check_box :show_outline
+  = f.check_box :show_outline, :class => 'style_section_toggle', :rel => "#outline_controls_#{toggle_id}"
   = f.label :show_outline
 
-%p
-  = f.label :outline_color, 'Outline Color:'
-  = f.text_field :outline_color, :size => 10, :class => 'colorwell'
-  = f.label :outline_width, 'Outline Width:'
-  = f.text_field :outline_width, :size => 10
-  = f.label :outline_join, 'Outline Join:'
-  = join_selector(f, :outline_join) 
+%span{ :id => "outline_controls_#{toggle_id}", :style => f.object.show_outline? ? 'display: block;' : 'display: none;' }
+  %p
+    = f.label :outline_color, 'Outline Color:'
+    = f.text_field :outline_color, :size => 10, :class => 'colorwell'
+    = f.label :outline_width, 'Outline Width:'
+    = f.text_field :outline_width, :size => 10
+    = f.label :outline_join, 'Outline Join:'
+    = join_selector(f, :outline_join) 
+    = f.label :outline_cap, 'Outline Cap:'
+    = cap_selector(f, :outline_cap)
+  %p
+    = f.label :outline_dasharray, 'Outline Dasharray:'
+    = f.text_field :outline_dasharray, :size => 6
 
 = render :partial => 'styles/label_style_form', :locals => { :f => f }
-
-#color_picker
 

@@ -2,8 +2,8 @@
   = f.label :title, 'Title:'
   = f.text_field :title
 %p
-  = f.label :name, 'Name:'
-  = f.text_field :name
+  = f.label :class_name, 'Class Name:'
+  = f.text_field :class_name
 %p
   = f.label :source_name, 'Data Source:'
   = f.select :source_name, DataSource.all.map { |ds| [ds.name, ds.name] }
@@ -14,4 +14,4 @@
   %table
     %tr
       %td= f.label :query, 'Query:'
-      %td= f.text_area :query
+      %td= f.text_area :query, :rows => 10, :cols => 100

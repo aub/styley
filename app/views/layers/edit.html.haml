@@ -4,13 +4,8 @@
   - @layer.types.each do |type|
     %li
       = type.title
-      = link_to('Edit', edit_layer_type_path(@layer, type), :style => 'text-decoration: underline;')
-      - if type.children
-        %ul
-          - type.children.each do |child|
-            %li
-              = child.title
-              = link_to('Edit', edit_layer_type_path(@layer, child))
+      = link_to('Edit', edit_layer_type_path(@layer, type))
+      = link_to('Delete', layer_type_path(@layer, type), :method => :delete)
 
 = link_to 'Add Type', new_layer_type_path(@layer)
 
