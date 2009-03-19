@@ -1,24 +1,24 @@
 coast:
   title: Base Layer
-  layer_name: coast
+  layer_class: coast
 
 area_water:
   title: Area Water 
-  layer_name: water_area
+  layer_class: water_area
 
 line_water:
   title: Line Water
-  layer_name: water_line
+  layer_class: water_line
 
 municipal_buildings:
   title: Municipal Buildings
-  layer_name: citylike_nonparking_area
+  layer_class: citylike_nonparking_area
 
 parks:
   title: Parks
-  layer_name: parklike_area
+  layer_class: parklike_area
 
 buildings:
   title: Buildings
-  layer_name: building_area
+  layer_class: building_area
 
