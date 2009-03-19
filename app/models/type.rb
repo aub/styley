@@ -3,7 +3,7 @@ class Type < ActiveRecord::Base
   has_many :styles, :foreign_key => 'attachment_id', :dependent => :destroy
   accepts_nested_attributes_for :styles, :allow_destroy => true
 
-  before_create :build_style
+  after_create :build_style
 
   def geometry_type
     layer.geometry_type
