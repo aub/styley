@@ -5,4 +5,4 @@ public/system/*
 tmp/*
 config/deploy.rb
 config/database.yml
-
+db/*sqlite3*
