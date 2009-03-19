@@ -3,3 +3,6 @@ public/images/rendered_maps/*
 public/system/*
 *.swp
 tmp/*
+config/deploy.rb
+config/database.yml
+
