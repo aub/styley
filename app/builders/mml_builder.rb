@@ -4,7 +4,7 @@ class MmlBuilder
     map = Map.first
     layers = Layer.find(:all, :order => 'position DESC', :conditions => ['enabled = ?', true])
 
-    style_string = "\nMap {\n\tmap-bgcolor: #{map.background_color};\n}\n\n"
+    style_string = "\nMap {\n  map-bgcolor: #{map.background_color};\n}\n\n"
     layers.each do |layer|
       layer.types.each do |type|
         style_string << type_to_mss(type, layer.class_name)
@@ -12,7 +12,7 @@ class MmlBuilder
     end
 
     buffer = ''
-    xml = Builder::XmlMarkup.new(:target => buffer, :indent => 0)
+    xml = Builder::XmlMarkup.new(:target => buffer, :indent => 2)
 
     xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
     xml.Map(:srs => map.srs) do |map_tag|
@@ -42,9 +42,7 @@ class MmlBuilder
     builder.Layer(:class => "#{layer.class_name} #{subclass}".strip, :srs => layer.data_source.srs) do |layer_tag|
       layer_tag.Datasource do |data_source_tag|
         layer.parameters.each do |key, value|
-          data_source_tag.Parameter(:name => key) do |p| 
-            p.text!(value.to_s)
-          end
+          data_source_tag.Parameter(value.to_s, :name => key)
         end
       end
     end
