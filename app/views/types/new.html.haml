@@ -3,4 +3,4 @@
 - form_for(@type, :url => layer_types_path(@layer), :method => :put) do |f|
   = render :partial => 'form', :locals => { :f => f, :type => @type, :layer => @layer }
   = f.submit 'Create'
-  = link_to('Cancel', edit_layer_path(@layer))
+  = link_to('Cancel', edit_layer_path(@layer), :class => 'nav_link')

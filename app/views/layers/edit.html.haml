@@ -14,5 +14,5 @@
 - form_for(@layer, :url => layer_path(@layer), :method => 'put') do |f|
   = render :partial => 'form', :locals => { :f => f }
   = f.submit('Update')
-  = link_to 'Cancel', layers_path
+  = link_to 'Cancel', layers_path, :class => 'nav_link'
 

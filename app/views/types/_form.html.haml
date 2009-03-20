@@ -8,9 +8,3 @@
   = f.label :filters, 'Filters:'
   = f.text_field :filters, :size => 50
 
-%p
-  #styles
-    - f.fields_for :styles do |style_form|
-      = render :partial => 'styles/style_form', :locals => { :f => style_form, :style => style_form.object, :type => type }
-  %p
-    = link_to('Add a Style', '#', :id => 'add_style', :rel => "/layers/#{layer.to_param}/types/#{type.to_param}/styles/new")

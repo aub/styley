@@ -53,3 +53,7 @@ body {
   display: none;
 }
 
+.nav_link {
+  font-size: 90%;
+  padding: 7px;
+}

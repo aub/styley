@@ -1,7 +1,14 @@
 %h2= @type.title
 - form_for (@type, :url => layer_type_path(@type.layer, @type), :method => :put, :html => { :multipart => true }) do |f|
   = render(:partial => 'form', :locals => { :f => f, :type => @type, :layer => @layer })
+  %p
+    #styles
+      - f.fields_for :styles do |style_form|
+        = render :partial => 'styles/style_form', :locals => { :f => style_form, :style => style_form.object, :type => @type }
+    %p
+      = link_to('Add a Style', '#', :id => 'add_style', :rel => "/layers/#{@layer.to_param}/types/#{@type.to_param}/styles/new")
+
   = f.submit 'Save'
-  = link_to 'Cancel', edit_layer_path(@type.layer)
+  = link_to 'Cancel', edit_layer_path(@type.layer), :class => 'nav_link'
 
 #color_picker
