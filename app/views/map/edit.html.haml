@@ -2,6 +2,11 @@
   = f.label :background_color
   = f.text_field :background_color, :size => 10, :class => 'colorwell' 
   %p
+    = f.label :default_center_lat, 'Default Center Latitude:'
+    = f.text_field :default_center_lat, :size => 10
+    = f.label :default_center_lon, 'Default Center Longitude:'
+    = f.text_field :default_center_lon, :size => 10
+  %p
     = f.submit 'Update'
 
 #color_picker

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090319225313) do
+ActiveRecord::Schema.define(:version => 20090320164742) do
 
   create_table "data_sources", :force => true do |t|
     t.string   "type"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(:version => 20090319225313) do
     t.string   "background_color"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "default_center_lat"
+    t.float    "default_center_lon"
   end
 
   create_table "styles", :force => true do |t|
