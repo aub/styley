@@ -1,7 +1,8 @@
 class BootstrapDataSources < ActiveRecord::Migration
   def self.up
     YAML::load(File.open('config/data_sources.yml'))[RAILS_ENV].each do |name, attrs|
-      data_source = DataSource.create(attrs.merge(:name => name))
+      type = attrs.delete('type')
+      data_source = type.constantize.create(attrs.merge(:name => name))
     end
   end
 
