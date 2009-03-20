@@ -4,7 +4,7 @@ class MmlBuilder
     map = Map.first
     layers = Layer.find(:all, :order => 'position DESC', :conditions => ['enabled = ?', true])
 
-    style_string = "Map { map-bgcolor: #{map.background_color}; }\n"
+    style_string = "\nMap {\n\tmap-bgcolor: #{map.background_color};\n}\n\n"
     layers.each do |layer|
       layer.types.each do |type|
         style_string << type_to_mss(type, layer.class_name)
