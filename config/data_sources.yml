@@ -12,3 +12,19 @@ development:
   coastline:
     type: ShapeDataSource
     file: /Users/aubrey/data/shapefiles/coastlines/processed_p
+
+production:
+  osm:
+    type: PostgisDataSource
+    host: localhost
+    port: 5432
+    user: postgres
+    password: Sleepy123
+    dbname: osm
+    extent: -20037508,-19929239,20037508,19929239
+    estimate_extent: false
+    srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs +over
+  coastline:
+    type: ShapeDataSource
+    file: /var/www/data/processed_p
+
